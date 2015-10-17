@@ -1,0 +1,38 @@
+select -hi;
+string $joint[] = `ls -sl` ;
+int $jntCount = size($joint);
+
+for ($i = 0; $i < $jntCount; $i++)
+{	
+	string $circle = $joint[$i] + "_Ctrl";
+	circle -n $circle;
+	string $group = $joint[$i] + "_ClGrp";
+	group -n $group;
+	$grp = `ls -sl`;
+	select $joint[$i] ;
+	select $grp;
+	
+	if($i > 0){
+        $parent = `listRelatives - p $joint[$i]`;
+        $prevCircle = $parent[0] + "_Ctrl";
+        select -tgl $prevCircle;
+        parent; 
+    	}
+     	
+		connectAttr -f ($joint[$i] + ".jointOrient") ($group + ".rotate");
+	connectAttr -f ($circle + ".rotate") ($joint[$i] + ".rotate");
+
+	select $joint [$i];
+	select -tgl $grp;
+    parentConstraint -weight 1;
+	parentConstraint -remove;
+	makeIdentity -apply true -t 1;
+
+	select $circle;
+	scale 2 2 2;
+	makeIdentity -apply true -s 1;
+
+	select $circle;
+	select -tgl $joint[$i];
+	pointConstraint -weight 1;
+}

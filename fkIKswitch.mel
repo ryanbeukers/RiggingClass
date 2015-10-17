@@ -1,0 +1,16 @@
+string $jointy[] = `ls -sl`;
+int $jntSize = size($jointy);
+
+for ($i=0;$i < $jntSize;$i++)
+{
+	string $blendy = `shadingNode -asUtility blendColors`;
+	select $blendy;
+	rename ($jointy[$i] + "Blend");
+	
+	$jointFK = $jointy[$i] + "FK";
+	$jointIK = $jointy[$i] + "IK";
+	connectAttr -f ($jointFK + ".rotate") (($jointy[$i] + "Blend") + ".color1");
+	connectAttr -f ($jointIK + ".rotate") (($jointy[$i] + "Blend") + ".color2");
+	connectAttr -f (($jointy[$i] + "Blend") + ".output") ($jointy[$i] + ".rotate");
+	connectAttr -f legSwitchCtrl.FKIK (($jointy[$i] + "Blend") + ".blender");
+};
