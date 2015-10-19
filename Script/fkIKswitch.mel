@@ -1,6 +1,11 @@
 string $jointy[] = `ls -sl`;
 int $jntSize = size($jointy);
 
+CreateNURBSCircle;
+rename "nurbsCircle1" "legSwitchCtrl";
+addAttr -ln "FKIK"  -at double  -min 0 -max 1 -dv 0 |legSwitchCtrl;
+setAttr -e-keyable true |legSwitchCtrl.FKIK;
+
 for ($i=0;$i < $jntSize;$i++)
 {
 	string $blendy = `shadingNode -asUtility blendColors`;
@@ -13,4 +18,5 @@ for ($i=0;$i < $jntSize;$i++)
 	connectAttr -f ($jointIK + ".rotate") (($jointy[$i] + "Blend") + ".color2");
 	connectAttr -f (($jointy[$i] + "Blend") + ".output") ($jointy[$i] + ".rotate");
 	connectAttr -f legSwitchCtrl.FKIK (($jointy[$i] + "Blend") + ".blender");
-};
+	connectAttr -f 
+}
