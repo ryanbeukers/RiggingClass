@@ -1,0 +1,16 @@
+select -hi;
+string $fings[]=`ls -sl`;
+
+select $fings[0];
+addAttr -ln "MidFinger"  -at double  -dv 0 $fings[0];
+setAttr -e-keyable true ($fings[0] + ".MidFinger");
+select $fings[0];
+addAttr -ln "EndFinger"  -at double  -dv 0 $fings[0];
+setAttr -e-keyable true ($fings[0] + ".EndFinger");
+select $fings[0];
+addAttr -ln "Ctrlvis"  -at bool  $fings[0];
+setAttr -e-keyable true ($fings[0] + ".Ctrlvis");
+select $fings[0];
+connectAttr -f ($fings[0] + ".MidFinger") ($fings[3] + ".rotateZ");
+connectAttr -f ($fings[0] + ".EndFinger") ($fings[5] + ".rotateZ");
+connectAttr -f ($fings[0] + ".Ctrlvis") ($fings[3] + ".visibility");

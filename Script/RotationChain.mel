@@ -1,0 +1,14 @@
+select -hi;
+string $jointy[]=`ls -sl`;
+$jointsize = size($jointy);
+
+for ($i=0; $i<$jointsize; $i++)
+{
+$Rotater = ($jointy[$i] + ".rotateOrder");
+//setAttr $Rotater 0; //xyz rotation order
+//setAttr $Rotater 1; //yzx rotation order
+//setAttr $Rotater 2; //zxy rotation order
+setAttr $Rotater 3; //xzy rotation order
+//setAttr $Rotater 4; //yxz rotation order
+//setAttr $Rotater 5; //zyx rotation order
+}
